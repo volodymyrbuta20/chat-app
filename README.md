@@ -10,8 +10,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 To clone and run this application on your local machine, you'll need Node.js (which comes with npm) installed on your computer and to follow instructions below.
 
 ```
-$ git clone https://git.steelkiwi.com/buta.volodymyr/chat-react.git
-$ cd chatreact
+$ git clone https://git@github.com:volodymyrbuta20/chat-app.git
+$ cd chat-app
 $ npm install
 ```
 
