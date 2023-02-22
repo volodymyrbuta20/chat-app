@@ -1,0 +1,61 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.message {
+	&__connection {
+		@include breakpoint (l) {
+			padding: 10px 0;
+		}
+		margin-bottom: 10px;
+		padding: 5px 0;
+		font-size: 12px;
+		font-weight: 500;
+		text-align: center;
+		background: transparent;
+		color: $text-grey;
+		text-shadow:1px 1px 0 $text-dark;
+	}
+
+	&__user {
+		@include breakpoint(m) {
+			width: 45%;
+			margin-bottom: 10px;
+			padding: 10px 20px;
+			font-size: 16px;
+		}
+
+		position:relative;
+		margin-bottom:7px;
+		padding:7px 10px;
+		width: 65%;
+		float: right;
+		text-align: right;
+		font-size: 14px;
+		font-weight: 500;
+		color: $text-light;
+		text-shadow:1px 1px 0 $text-dark;
+		border-radius: 14px 14px 0 14px;
+		background-color:$chat-bg;
+	}
+
+	&__partner {
+		@include breakpoint(m) {
+			width: 45%;
+			margin-bottom: 10px;
+			padding: 10px 20px;
+			font-size: 16px;
+		}
+
+		position:relative;
+		margin-bottom:7px;
+		padding:7px 10px;
+		width: 65%;
+		float: left;
+		font-size: 14px;
+		font-weight: 500;
+		text-shadow:1px 1px 0 $text-light;
+		color: $text-dark;
+		border-radius:14px 14px 14px 0;
+		background-color: $body-bg;
+	}
+}

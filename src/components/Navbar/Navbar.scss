@@ -1,0 +1,12 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.navbar {
+	@include breakpoint(l) {
+		height: 80px;
+	}
+	width: 100%;
+	height: 50px;
+	padding: 15px;
+	background: $secondary-color;
+}

@@ -1,0 +1,45 @@
+@import "../../styles/variables.scss";
+
+.chat-form {
+	padding: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&__input {
+		position: relative;
+	  width: 100%;
+	  padding: 12px 100px 12px 20px;
+	  background: $input-bg;
+		border: 1px solid $text-grey;
+		border-bottom: 3px solid $primary-color;
+		border-radius: 6px;
+		font-size: 16px;
+		font-weight: 500;
+		color: $text-input;
+		text-shadow: 1px 1px 0 $text-dark;
+		&::placeholder {
+			font-size: 16px;
+			font-weight: 500;
+			color: $text-grey;
+			text-shadow: none;
+		}
+		&:focus {
+			outline: 0.5px solid $primary-color;
+		}
+	}
+
+	&__button {
+		position: absolute;
+		right: 15px;
+		padding: 12px 20px;
+		border: none;
+		font-size: 16px;
+		color: $primary-color;
+		background: transparent;
+		cursor: pointer;
+		&:focus {
+			outline: 0.5px solid $primary-color;
+		}
+	}
+}
