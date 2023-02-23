@@ -14,7 +14,7 @@ class Message extends Component {
         ) : (
           <p
             className={
-              chatUser.id === item.userId ? 'message__user' : 'message__partner'
+              chatUser && chatUser.id === item.userId ? 'message__user' : 'message__partner'
             }
           >
             {item.message}
