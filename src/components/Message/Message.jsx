@@ -5,6 +5,8 @@ class Message extends Component {
   render() {
     const { item, chatUser } = this.props;
 
+    console.log(item)
+
     return (
       <div className="message">
         {item.event === 'connection' ? (
@@ -12,13 +14,14 @@ class Message extends Component {
             {item.author.userName} connected to chat
           </p>
         ) : (
-          <p
-            className={
-              chatUser && chatUser.id === item.userId ? 'message__user' : 'message__partner'
-            }
-          >
-            {item.message}
-          </p>
+          <div className={chatUser && chatUser.id === item.userId ? 'message__user' : 'message__partner'}>
+            <div className="message__name">
+              {item.userName}
+            </div>
+            <div className={chatUser && chatUser.id === item.userId ? 'message__user-text' : 'message__partner-text'}>
+              {item.message}
+            </div>
+          </div>
         )}
       </div>
     );

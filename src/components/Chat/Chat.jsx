@@ -60,7 +60,7 @@ class Chat extends Component {
           ))}
         </div>
         {chatUser ? (
-          <MessageForm socket={webSocket} userId={chatUser.id} />
+          <MessageForm socket={webSocket} chatUser={chatUser} />
         ) : (
           <UserForm socket={webSocket} setUser={this.setUser} />
         )}

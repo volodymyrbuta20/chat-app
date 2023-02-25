@@ -20,21 +20,28 @@
 		@include breakpoint(m) {
 			width: 45%;
 			margin-bottom: 10px;
-			padding: 10px 20px;
 			font-size: 16px;
 		}
 
 		position:relative;
 		margin-bottom:7px;
-		padding:7px 10px;
 		width: 65%;
 		float: right;
 		text-align: right;
+	}
+
+	&__user-text {
+		@include breakpoint(m) {
+			padding: 10px 20px;
+			font-size: 16px;
+		}
+
+		padding:7px 10px;
 		font-size: 14px;
 		font-weight: 500;
 		color: $text-light;
 		text-shadow:1px 1px 0 $text-dark;
-		border-radius: 14px 14px 0 14px;
+		border-radius: 10px 10px 0 10px;
 		background-color:$chat-bg;
 	}
 
@@ -42,20 +49,35 @@
 		@include breakpoint(m) {
 			width: 45%;
 			margin-bottom: 10px;
-			padding: 10px 20px;
 			font-size: 16px;
 		}
 
 		position:relative;
 		margin-bottom:7px;
-		padding:7px 10px;
 		width: 65%;
 		float: left;
+	}
+
+	&__partner-text {
+		@include breakpoint(m) {
+			padding: 10px 20px;
+			font-size: 16px;
+		}
+
+		padding:7px 10px;
 		font-size: 14px;
 		font-weight: 500;
 		text-shadow:1px 1px 0 $text-light;
 		color: $text-dark;
-		border-radius:14px 14px 14px 0;
+		border-radius:10px 10px 10px 0;
 		background-color: $body-bg;
+	}
+
+	&__name {
+		margin-bottom: 5px;
+		padding: 0 10px;
+		font-size: 14px;
+		font-weight: 500;
+		color: $primary-color;
 	}
 }

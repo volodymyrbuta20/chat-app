@@ -13,10 +13,12 @@ class MessageForm extends Component {
   sendMessage = (e) => {
     e.preventDefault();
     const { messageValue } = this.state;
-    const userId = this.props.userId;
+    const userId = this.props.chatUser.id;
+    const userName = this.props.chatUser.userName;
     const message = {
       id: uuidv4(),
       userId,
+      userName,
       message: messageValue,
       event: 'message'
     };
