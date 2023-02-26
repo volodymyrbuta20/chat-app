@@ -5,8 +5,6 @@ class Message extends Component {
   render() {
     const { item, chatUser } = this.props;
 
-    console.log(item)
-
     return (
       <div className="message">
         {item.event === 'connection' ? (
