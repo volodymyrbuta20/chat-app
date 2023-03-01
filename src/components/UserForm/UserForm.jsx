@@ -1,48 +1,35 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import '../MessageForm/MessageForm.scss';
 
-class UserForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userName: ''
-    };
-  }
+const UserForm = ({ setChatUser }) => {
+  const [userName, setUserName] = useState('');
 
-  newUserConnect = (e) => {
+  const newUserConnect = (e) => {
     e.preventDefault();
-    const { userName } = this.state;
     const message = {
-      author: {
-        id: uuidv4(),
-        userName
-      },
       id: uuidv4(),
-      event: 'connection'
+      userName
     };
-    this.props.socket.send(JSON.stringify(message));
-    this.props.setUser(message.author);
+    setChatUser(message)
   };
 
-  render() {
-    return (
-      <form className="chat-form" onSubmit={this.newUserConnect}>
-        <input
-          type="text"
-          className="chat-form__input"
-          autoFocus
-          required
-          value={this.state.userName}
-          placeholder="Enter your name"
-          onChange={(e) => this.setState({ userName: e.target.value })}
-        />
-        <button type="submit" className="chat-form__button">
-          Connect
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form className="chat-form" onSubmit={newUserConnect}>
+      <input
+        type="text"
+        className="chat-form__input"
+        autoFocus
+        required
+        value={userName}
+        placeholder="Enter your name"
+        onChange={(e) => setUserName(e.target.value)}
+      />
+      <button type="submit" className="chat-form__button">
+        Connect
+      </button>
+    </form>
+  );
 }
 
 export default UserForm;

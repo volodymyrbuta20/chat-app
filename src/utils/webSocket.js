@@ -1,1 +1,1 @@
-export const webSocket = new WebSocket('ws://localhost:5000');
+export const SOCKET_URL = 'ws://localhost:5000';

@@ -1,47 +1,29 @@
-import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
 import './MessageForm.scss';
 
-class MessageForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messageValue: ''
-    };
-  }
+const MessageForm = ({ handleSubmit }) => {
+  const [messageValue, setMessageValue] = useState('');
 
-  sendMessage = (e) => {
+  const sendMessage = (e) => {
     e.preventDefault();
-    const { messageValue } = this.state;
-    const userId = this.props.chatUser.id;
-    const userName = this.props.chatUser.userName;
-    const message = {
-      id: uuidv4(),
-      userId,
-      userName,
-      message: messageValue,
-      event: 'message'
-    };
-    this.props.socket.send(JSON.stringify(message));
-    this.setState({ messageValue: '' });
+    handleSubmit(messageValue);
+    setMessageValue('');
   };
 
-  render() {
-    return (
-      <form className="chat-form" onSubmit={this.sendMessage}>
-        <input
-          type="text"
-          className="chat-form__input"
-          required
-          autoFocus
-          value={this.state.messageValue}
-          placeholder="Type your message"
-          onChange={(e) => this.setState({ messageValue: e.target.value })}
-        />
-        <button className="chat-form__button">Send</button>
-      </form>
-    );
-  }
+  return (
+    <form className="chat-form" onSubmit={sendMessage}>
+      <input
+        type="text"
+        className="chat-form__input"
+        required
+        autoFocus
+        value={messageValue}
+        placeholder="Type your message"
+        onChange={(e) => setMessageValue(e.target.value)}
+      />
+      <button className="chat-form__button">Send</button>
+    </form>
+  );
 }
 
 export default MessageForm;
