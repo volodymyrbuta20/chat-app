@@ -1,72 +1,71 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import { webSocket } from '../../utils/webSocket';
+import { SOCKET_URL } from '../../utils/webSocket';
 import MessageForm from '../MessageForm/MessageForm';
 import UserForm from '../UserForm/UserForm';
 import Message from '../Message/Message';
 
 import './Chat.scss';
 
-class Chat extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messagesList: [],
-      chatUser: null
+const Chat = () => {
+  const [messagesList, setMessagesList] = useState([]);
+  const [user, setUser] = useState(null);
+  const socket = useRef(null);
+  const messageContainer = useRef(null);
+
+  useEffect(() => {
+    socket.current = new WebSocket(SOCKET_URL);
+    socket.current.onmessage = updateMessagesList;
+    scrollChatToBottom();
+    return () => {
+      socket.current.close();
     };
-    this.messageContainer = React.createRef();
-  }
+  });
 
-  componentDidMount() {
-    webSocket.onmessage = this.updateMessagesList;
-    webSocket.onerror = this.showErrorMessage;
-    this.scrollChatToBottom();
-  }
-
-  componentWillUnmount() {
-    webSocket.onclose = () => {
-      webSocket.close();
-    };
-  }
-
-  updateMessagesList = (e) => {
+  const updateMessagesList = (e) => {
     const dataFromServer = JSON.parse(e.data);
-    this.setState((prevState) => ({
-      messagesList: [...prevState.messagesList, dataFromServer]
-    }));
+    setMessagesList((prevState) => [...prevState, dataFromServer]);
   };
 
-  scrollChatToBottom = () => {
-    if (this.messageContainer) {
-      this.messageContainer.current.addEventListener('DOMNodeInserted', (e) => {
+  const scrollChatToBottom = () => {
+    if (messageContainer) {
+      messageContainer.current.addEventListener('DOMNodeInserted', (e) => {
         const target = e.currentTarget;
         target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
       });
     }
   };
 
-  setUser = (user) => {
-    this.setState({ chatUser: user });
+  const setChatUser = (user) => {
+    setUser(user);
+  }
+
+  const handleSubmit = (message) => {
+    socket.current.send(
+      JSON.stringify({
+        user,
+        userId: user.id,
+        id: uuidv4(),
+        message
+      })
+    );
   };
 
-  render() {
-    const { messagesList, chatUser } = this.state;
-
-    return (
-      <div className="chat">
-        <div className="chat__container" ref={this.messageContainer}>
-          {messagesList.map((item) => (
-            <Message item={item} chatUser={chatUser} key={item.id} />
-          ))}
-        </div>
-        {chatUser ? (
-          <MessageForm socket={webSocket} chatUser={chatUser} />
-        ) : (
-          <UserForm socket={webSocket} setUser={this.setUser} />
-        )}
+  return (
+    <div className="chat">
+      <div className="chat__container" ref={messageContainer}>
+        {messagesList.map((item) => (
+          <Message item={item} chatUser={user} key={item.id} />
+        ))}
       </div>
-    );
-  }
+      {user ? (
+        <MessageForm handleSubmit={handleSubmit} />
+      ) : (
+        <UserForm setUser={setChatUser} />
+      )}
+    </div>
+  );
 }
 
 export default Chat;
