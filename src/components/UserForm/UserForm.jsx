@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import '../MessageForm/MessageForm.scss';
 
-const UserForm = ({ setChatUser }) => {
+const UserForm = ({ setUser }) => {
   const [userName, setUserName] = useState('');
 
   const newUserConnect = (e) => {
@@ -11,7 +11,7 @@ const UserForm = ({ setChatUser }) => {
       id: uuidv4(),
       userName
     };
-    setChatUser(message)
+    setUser(message)
   };
 
   return (

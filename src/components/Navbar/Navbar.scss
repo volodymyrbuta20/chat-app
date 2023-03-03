@@ -8,5 +8,37 @@
 	width: 100%;
 	height: 50px;
 	padding: 15px;
+	display: flex;
+	align-items: center;
 	background: $secondary-color;
+
+	&__container {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__list {
+		display: flex;
+		align-items: center;
+	}
+
+	&__item {
+		padding: 5px 15px;
+	}
+
+	&__link {
+		font-size: 18px;
+		font-weight: 500;
+		color: $chat-bg;
+		transition: all 0.2s;
+		&:hover {
+			color: $text-dark;
+		}
+	}
+}
+
+.active {
+	color: $text-dark;
 }

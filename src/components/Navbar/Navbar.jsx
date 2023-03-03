@@ -1,10 +1,69 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+
+import { AuthContext } from '../../context/AuthContext';
+import MyButton from '../MyButton/MyButton';
+
 import './Navbar.scss';
 
-class Navbar extends Component {
-  render() {
-    return <div className="navbar"></div>;
-  }
-}
+const Navbar = () => {
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    if (isAuth) {
+      setIsAuth(null);
+      window.localStorage.removeItem('user');
+      navigate('/login', { replace: true });
+    }
+  };
+
+  return (
+    <div className="navbar">
+      <div className="navbar__container">
+        <nav className="navbar__navigation">
+          <ul className="navbar__list">
+            <li className="navbar__item">
+              <NavLink to="/chat" className="navbar__link">
+                Chat
+              </NavLink>
+            </li>
+            <li className="navbar__item">
+              <NavLink to="/" className="navbar__link">
+                About
+              </NavLink>
+            </li>
+            <li className="navbar__item">
+              <NavLink to="/partners" className="navbar__link">
+                Partners
+              </NavLink>
+            </li>
+            <li className="navbar__item">
+              <NavLink to="/privacy" className="navbar__link">
+                Privacy policy
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+        <div className="navbar__login">
+          {isAuth ? (
+            <div className="btns">
+              <MyButton size="small" color="dark">
+                Profile
+              </MyButton>
+              <MyButton size="small" color="dark" onClick={logout}>
+                Logout
+              </MyButton>
+            </div>
+          ) : (
+            <MyButton to="/login" size="small" color="dark">
+              Login
+            </MyButton>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Navbar;

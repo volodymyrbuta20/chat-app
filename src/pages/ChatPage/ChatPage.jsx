@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { SOCKET_URL } from '../../utils/webSocket';
-import MessageForm from '../MessageForm/MessageForm';
-import UserForm from '../UserForm/UserForm';
-import Message from '../Message/Message';
+import MessageForm from '../../components/MessageForm/MessageForm';
+import UserForm from '../../components/UserForm/UserForm';
+import Message from '../../components/Message/Message';
+import useScrollMessages from '../../hooks/useScrollMessages';
 
 import './Chat.scss';
 
@@ -12,12 +13,11 @@ const Chat = () => {
   const [messagesList, setMessagesList] = useState([]);
   const [user, setUser] = useState(null);
   const socket = useRef(null);
-  const messageContainer = useRef(null);
+  const messageContainer = useScrollMessages(messagesList);
 
   useEffect(() => {
     socket.current = new WebSocket(SOCKET_URL);
     socket.current.onmessage = updateMessagesList;
-    scrollChatToBottom();
     return () => {
       socket.current.close();
     };
@@ -26,15 +26,6 @@ const Chat = () => {
   const updateMessagesList = (e) => {
     const dataFromServer = JSON.parse(e.data);
     setMessagesList((prevState) => [...prevState, dataFromServer]);
-  };
-
-  const scrollChatToBottom = () => {
-    if (messageContainer) {
-      messageContainer.current.addEventListener('DOMNodeInserted', (e) => {
-        const target = e.currentTarget;
-        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-      });
-    }
   };
 
   const setChatUser = (user) => {
@@ -46,6 +37,7 @@ const Chat = () => {
       JSON.stringify({
         user,
         userId: user.id,
+        userName: user.userName,
         id: uuidv4(),
         message
       })
