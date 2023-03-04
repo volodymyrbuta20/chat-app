@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { SOCKET_URL } from '../../utils/webSocket';
 import MessageForm from '../../components/MessageForm/MessageForm';
-import UserForm from '../../components/UserForm/UserForm';
+import LoginForm from '../../components/LoginForm/LoginForm';
 import Message from '../../components/Message/Message';
 import useScrollMessages from '../../hooks/useScrollMessages';
 
@@ -54,7 +54,7 @@ const Chat = () => {
       {user ? (
         <MessageForm handleSubmit={handleSubmit} />
       ) : (
-        <UserForm setUser={setChatUser} />
+        <LoginForm setUser={setChatUser} />
       )}
     </div>
   );

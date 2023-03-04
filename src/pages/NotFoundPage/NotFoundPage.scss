@@ -1,0 +1,51 @@
+@import '../../styles/variables.scss';
+
+.notfound {
+	&__wrapper {
+		padding: 40px;
+		text-align: center;
+	}
+
+	&__title {
+		font-size: 34px;
+		font-weight: 500;
+		color: $text-light;
+		text-align: center;
+		text-shadow:1px 1px 0 $text-dark;
+	}
+
+	&__subtitle {
+		font-size: 34px;
+		font-weight: 500;
+		color: $text-grey;
+		text-align: center;
+		text-shadow:1px 1px 0 $text-dark;
+	}
+
+	&__img {
+		margin: 25px auto;
+		display: block;
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+	}
+
+	&__btn {
+		margin: 0 auto;
+		padding: 12px 40px;
+		border: none;
+		font-size: 18px;
+		font-weight: 600;
+		color: $chat-bg;
+		border-radius: 6px;
+		background: $primary-color;
+		transition: all 0.2s;
+		cursor: pointer;
+		&:focus {
+			outline: 0.5px solid $primary-color;
+		}
+		&:hover {
+			background: $secondary-color;
+		}
+	}
+}

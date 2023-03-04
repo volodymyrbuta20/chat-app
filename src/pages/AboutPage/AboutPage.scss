@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+
+.about {
+	&__wrapper {
+		padding: 20px 40px;
+	}
+
+	&__title {
+		font-size: 34px;
+		font-weight: 500;
+		color: $text-light;
+		text-align: center;
+		text-shadow:1px 1px 0 $text-dark;
+	}
+
+	&__descr {
+		max-width: 80%;
+		margin: 15px auto 0;
+		font-size: 16px;
+		font-weight: 500;
+		color: $text-light;
+		text-shadow:1px 1px 0 $text-dark;
+	}
+
+	&__descr p {
+		margin-top: 10px;
+	}
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import '../MessageForm/MessageForm.scss';
 
-const UserForm = ({ setUser }) => {
+const LoginForm = ({ setUser }) => {
   const [userName, setUserName] = useState('');
 
   const newUserConnect = (e) => {
@@ -32,4 +32,4 @@ const UserForm = ({ setUser }) => {
   );
 }
 
-export default UserForm;
+export default LoginForm;
