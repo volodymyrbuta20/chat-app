@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../../context/AuthContext';
-import MyButton from '../MyButton/MyButton';
 
 import './Navbar.scss';
 
@@ -48,17 +47,17 @@ const Navbar = () => {
         <div className="navbar__login">
           {isAuth ? (
             <div className="btns">
-              <MyButton size="small" color="dark">
+              <Link to="/profile" type="button" className="navbar__btn">
                 Profile
-              </MyButton>
-              <MyButton size="small" color="dark" onClick={logout}>
+              </Link>
+              <button type="button" className="navbar__btn" onClick={logout}>
                 Logout
-              </MyButton>
+              </button>
             </div>
           ) : (
-            <MyButton to="/login" size="small" color="dark">
+            <Link to="/login" type="button" className="navbar__btn">
               Login
-            </MyButton>
+            </Link>
           )}
         </div>
       </div>
