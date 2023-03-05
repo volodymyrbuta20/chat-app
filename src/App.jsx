@@ -1,13 +1,27 @@
-import Chat from "./components/Chat/Chat";
-import Navbar from "./components/Navbar/Navbar";
+import React, { useState, useEffect } from 'react';
+import { RouterProvider } from 'react-router-dom';
 
-function App() {
+import useLocalStorage from './hooks/useLocalStorage';
+import { AuthContext } from './context/AuthContext';
+import router from './router/RouterProvider';
+
+const App = () => {
+  const [isAuth, setIsAuth] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { value } = useLocalStorage('user');
+
+  useEffect(() => {
+    if (value) {
+      setIsAuth(value);
+    }
+    setIsLoading(false);
+  }, [value]);
+
   return (
-    <div className="app">
-      <Navbar/>
-      <Chat/>
-    </div>
+    <AuthContext.Provider value={{ isAuth, setIsAuth, isLoading }}>
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
   );
-}
+};
 
 export default App;
