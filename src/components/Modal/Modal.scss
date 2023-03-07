@@ -1,0 +1,67 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.382);
+	opacity: 0;
+  transition: opacity 400ms ease-in-out;
+}
+
+.modal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	padding: 80px 30px;
+	transform: translate(-50%, -50%);
+	background: $chat-bg;
+	border-radius: 12px;
+	transition: all 0.4s;
+
+	&__wrapper {
+		@include breakpoint(m) {
+			width: 500px;
+		}
+
+		width: 260px;
+	}
+
+	&__title {
+		@include breakpoint(m) {
+			margin-bottom: 30px;
+			font-size: 34px;
+		}
+
+		margin-bottom: 20px;
+			font-size: 22px;
+		font-weight: 500;
+		color: $text-light;
+		text-align: center;
+		text-shadow:1px 1px 0 $text-dark;
+	}
+
+	&__close {
+		position: absolute;
+		top: 15px;
+		right: 20px;
+		font-weight: 500;
+		font-size: 36px;
+		line-height: 33px;
+		background: transparent;
+		border: none;
+		color: $primary-color;
+		cursor: pointer;
+	}
+}
+
+.ReactModal__Overlay--after-open{
+	opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+	opacity: 0;
+}

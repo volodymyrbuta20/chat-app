@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 
 import './Navbar.scss';
 
-const Navbar = () => {
+const Navbar = ({ handleOpenModal }) => {
   const { isAuth, setIsAuth } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -47,9 +47,9 @@ const Navbar = () => {
         <div className="navbar__login">
           {isAuth ? (
             <div className="btns">
-              <Link to="/profile" type="button" className="navbar__btn">
+              <button type="button" className="navbar__btn" onClick={handleOpenModal}>
                 Profile
-              </Link>
+              </button>
               <button type="button" className="navbar__btn" onClick={logout}>
                 Logout
               </button>
