@@ -1,0 +1,23 @@
+@import '../../styles//variables.scss';
+
+.myoption {
+	display: flex;
+	align-items: center;
+	padding: 8px 20px;
+	cursor: pointer;
+	&:hover {
+		background: #444a64cc;
+	}
+
+	&__flag {
+		width: 30px;
+		height: 20px;
+		margin-right: 10px;
+	}
+
+	&__country {
+		font-size: 14px;
+		font-weight: 500;
+		color: $secondary-color;
+	}
+}

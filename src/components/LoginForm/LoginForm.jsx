@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { AuthContext } from '../../context/AuthContext';
+import Select from '../Select/Select';
 import './LoginForm.scss';
 
 const LoginForm = () => {
@@ -40,6 +41,9 @@ const LoginForm = () => {
         value={userName}
         placeholder="Enter your name"
         onChange={(e) => setUserName(e.target.value)}
+      />
+      <Select
+        name="country"
       />
       <button type="submit" className="login-form__button">
         Login
