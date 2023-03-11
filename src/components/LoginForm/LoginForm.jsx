@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
+import { Formik, Form, Field } from 'formik';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { AuthContext } from '../../context/AuthContext';
 import Select from '../Select/Select';
+import { userValidation } from './LoginFormSchema';
 import './LoginForm.scss';
 
 const LoginForm = () => {
@@ -31,24 +33,33 @@ const LoginForm = () => {
   };
 
   return (
-    <form className="login-form" onSubmit={newUserConnect}>
-      <input
-        name="userName"
-        type="text"
-        className="login-form__input"
-        autoFocus
-        required
-        value={userName}
-        placeholder="Enter your name"
-        onChange={(e) => setUserName(e.target.value)}
-      />
-      <Select
-        name="country"
-      />
-      <button type="submit" className="login-form__button">
-        Login
-      </button>
-    </form>
+    <Formik
+      initialValues={{ userName: '', country: '' }}
+      validationSchema={userValidation}
+      onSubmit={newUserConnect}
+    >
+      <Form className="login-form">
+        <input
+          name="userName"
+          label="Name"
+          placeholder="Enter your name"
+          type="text"
+          autoFocus
+        />
+        <Field
+          component={Select}
+          name="country"
+          label="Country"
+          getOptionValue={(option) => option.code}
+          getOptionLabel={(option) => option.name}
+          placeholder="Select your country"
+        />
+        <button size="large" color="primary" type="submit">
+          Login
+        </button>
+      </Form>
+    </Formik>
+
   );
 };
 
