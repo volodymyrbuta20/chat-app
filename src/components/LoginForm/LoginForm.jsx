@@ -6,7 +6,11 @@ import { Formik, Form, Field } from 'formik';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { AuthContext } from '../../context/AuthContext';
 import Select from '../Select/Select';
+import Input from '../Input/Input';
+import Button from '../Button/Button';
 import { userValidation } from './LoginFormSchema';
+import { countries } from '../../utils/countries';
+import SelectOptionWithFlag from '../SelectOptionWithFlag/SelectOptionWithFlag';
 import './LoginForm.scss';
 
 const LoginForm = () => {
@@ -39,7 +43,7 @@ const LoginForm = () => {
       onSubmit={newUserConnect}
     >
       <Form className="login-form">
-        <input
+        <Input
           name="userName"
           label="Name"
           placeholder="Enter your name"
@@ -50,13 +54,15 @@ const LoginForm = () => {
           component={Select}
           name="country"
           label="Country"
+          options={countries}
           getOptionValue={(option) => option.code}
           getOptionLabel={(option) => option.name}
           placeholder="Select your country"
+          customOption={SelectOptionWithFlag}
         />
-        <button size="large" color="primary" type="submit">
+        <Button size="large" color="primary" type="submit">
           Login
-        </button>
+        </Button>
       </Form>
     </Formik>
 

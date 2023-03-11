@@ -1,42 +1,45 @@
 import React from 'react';
-import Select from 'react-select';
-import Flag from 'react-world-flags';
-import { Field, ErrorMessage } from 'formik';
-
-import { countries } from '../../utils/countries';
+import ReactSelect from 'react-select';
+import { ErrorMessage } from 'formik';
 
 import { customStyles } from './customStyles';
 import './Select.scss';
 
-const MySelect = ({ name, value, onChange, ...props }) => {
-  const options = countries.map((country) => ({
-    value: country.code,
-    label: country.name
-  }));
+const Select = ({ field, form, options, customOption, ...props }) => {
+  const getValue = () => {
+    if (options) {
+      return props.isMulti
+        ? options.filter((option) => field.value.includes(option))
+        : options.find((option) => option === field.value);
+    }
+  };
 
-  const customOption = ({ data, innerProps }) => (
-    <div {...innerProps} className="myoption">
-      <Flag code={data.value} className="myoption__flag" />
-      <span className="myoption__country">{data.label}</span>
-    </div>
-  );
+  const onChange = (option) => {
+    form.setFieldValue(
+      field.name,
+      props.isMulti ? option.map((item) => item) : option
+    );
+  };
 
   return (
     <>
-      <Field
-        name={name}
-        as={Select}
-        value={value}
+      <ReactSelect
+        name={field.name}
+        value={getValue()}
         onChange={onChange}
+        onBlur={field.onBlur}
         styles={customStyles}
         options={options}
-        components={{ Option: customOption }}
-        placeholder="Select your country"
+        placeholder={props.placeholder}
+        components={{
+          Option: customOption,
+          ...props
+        }}
         {...props}
       />
-      <ErrorMessage component="div" className="error" name={name} />
+      <ErrorMessage component="div" className="error" name={field.name} />
     </>
   );
 };
 
-export default MySelect;
+export default Select;
