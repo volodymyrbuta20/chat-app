@@ -1,0 +1,70 @@
+@import '../../styles//variables.scss';
+
+.button {
+	border: none;
+	border-radius: 6px;
+	transition: all 0.2s;
+	cursor: pointer;
+
+	&--small {
+		margin: 0 5px;
+		padding: 5px 30px;
+		font-size: 16px;
+		font-weight: 500;
+	}
+
+	&--medium {
+		padding: 12px 20px;
+		font-size: 16px;
+		font-weight: 500;
+	}
+
+	&--large {
+		margin-top: 25px;
+		padding: 12px 50px;
+		font-size: 18px;
+		font-weight: 600;
+	}
+
+	&--primary {
+		background: $primary-color;
+		color: $chat-bg;
+		&:focus {
+			outline: 0.5px solid $primary-color;
+		}
+		&:hover {
+			background: $secondary-color;
+		}
+	}
+
+	&--dark {
+		background: $chat-bg;
+		color: $primary-color;
+		&:hover {
+			background: $text-dark;
+		}
+	}
+
+	&--transparent {
+		color: $primary-color;
+		background: transparent;
+		&:focus {
+			outline: 0.5px solid $primary-color;
+		}
+	}
+
+	&--spacing {
+		margin: spacing;
+	}
+
+	&--absolute {
+		position: absolute;
+		top: 0;
+		right: 15px;
+	}
+
+	&:disabled {
+		color: $text-grey;
+		filter: grayscale(.5);
+	}
+}

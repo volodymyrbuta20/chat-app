@@ -1,0 +1,24 @@
+@import '../../styles/variables.scss';
+
+.input {
+	position: relative;
+	width: 100%;
+  padding: 12px 20px;
+  background: $input-bg;
+	border: 1px solid $text-grey;
+	border-bottom: 3px solid $primary-color;
+	border-radius: 6px;
+	font-size: 16px;
+	font-weight: 500;
+	color: $text-input;
+	text-shadow: 1px 1px 0 $text-dark;
+	&::placeholder {
+		font-size: 16px;
+		font-weight: 500;
+		color: $text-grey;
+		text-shadow: none;
+	}
+	&:focus {
+		outline: 0.5px solid $primary-color;
+	}
+}
