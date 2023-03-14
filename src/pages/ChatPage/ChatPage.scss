@@ -2,6 +2,14 @@
 @import "../../styles/mixins.scss";
 
 .chat {
+	@include breakpoint(l) {
+		height: calc(100vh - 80px);
+	}
+	height: calc(100vh - 50px);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+
 	&__container {
 		@include breakpoint(l) {
 			padding: 20px 40px;

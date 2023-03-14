@@ -1,12 +1,15 @@
-import React, { useContext } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 
 import { AuthContext } from '../../context/AuthContext';
+import Button from '../Button/Button';
 
 import './Navbar.scss';
 
 const Navbar = ({ handleOpenModal }) => {
   const { isAuth, setIsAuth } = useContext(AuthContext);
+  const [active, setActive] = useState(false);
   const navigate = useNavigate();
 
   const logout = () => {
@@ -17,28 +20,56 @@ const Navbar = ({ handleOpenModal }) => {
     }
   };
 
+  const handleNavOpen = () => {
+    setActive(true);
+  };
+
+  const handleNavClose = () => {
+    setActive(false);
+  };
+
   return (
     <div className="navbar">
       <div className="navbar__container">
+        <button
+          className={classNames('burger', { active: active })}
+          onClick={active ? handleNavClose : handleNavOpen}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <nav className="navbar__navigation">
-          <ul className="navbar__list">
+          <ul className={classNames('navbar__list', { active: active })}>
             <li className="navbar__item">
-              <NavLink to="/chat" className="navbar__link">
+              <NavLink
+                to="/chat"
+                className="navbar__link"
+                onClick={handleNavClose}
+              >
                 Chat
               </NavLink>
             </li>
             <li className="navbar__item">
-              <NavLink to="/" className="navbar__link">
+              <NavLink to="/" className="navbar__link" onClick={handleNavClose}>
                 About
               </NavLink>
             </li>
             <li className="navbar__item">
-              <NavLink to="/partners" className="navbar__link">
+              <NavLink
+                to="/partners"
+                className="navbar__link"
+                onClick={handleNavClose}
+              >
                 Partners
               </NavLink>
             </li>
             <li className="navbar__item">
-              <NavLink to="/privacy" className="navbar__link">
+              <NavLink
+                to="/privacy"
+                className="navbar__link"
+                onClick={handleNavClose}
+              >
                 Privacy policy
               </NavLink>
             </li>
@@ -47,17 +78,17 @@ const Navbar = ({ handleOpenModal }) => {
         <div className="navbar__login">
           {isAuth ? (
             <div className="btns">
-              <button type="button" className="navbar__btn" onClick={handleOpenModal}>
+              <Button size="small" color="dark" onClick={handleOpenModal}>
                 Profile
-              </button>
-              <button type="button" className="navbar__btn" onClick={logout}>
+              </Button>
+              <Button size="small" color="dark" onClick={logout}>
                 Logout
-              </button>
+              </Button>
             </div>
           ) : (
-            <Link to="/login" type="button" className="navbar__btn">
+            <Button to="/login" size="small" color="dark">
               Login
-            </Link>
+            </Button>
           )}
         </div>
       </div>
