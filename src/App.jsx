@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import ReactModal from 'react-modal';
+import { ToastContainer } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 import useLocalStorage from './hooks/useLocalStorage';
-import { AuthContext } from './context/AuthContext';
+import { setUser } from './store/userSlice';
 import router from './router/RouterProvider';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   ReactModal.setAppElement('#root');
 
-  const [isAuth, setIsAuth] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const { value } = useLocalStorage('user');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (value) {
-      setIsAuth(value);
+      dispatch(setUser(value));
     }
-    setIsLoading(false);
   }, [value]);
 
   return (
-    <AuthContext.Provider value={{ isAuth, setIsAuth, isLoading }}>
+    <>
       <RouterProvider router={router} />
-    </AuthContext.Provider>
+      <ToastContainer position="top-center" />
+    </>
   );
 };
 

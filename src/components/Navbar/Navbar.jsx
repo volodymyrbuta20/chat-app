@@ -1,57 +1,71 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { AuthContext } from '../../context/AuthContext';
+import { removeUser } from '../../store/userSlice';
+import { userSelector } from '../../store/selectors';
 import Button from '../Button/Button';
 
 import './Navbar.scss';
 
 const Navbar = ({ handleOpenModal }) => {
-  const { isAuth, setIsAuth } = useContext(AuthContext);
-  const [active, setActive] = useState(false);
+  const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
   const navigate = useNavigate();
+  const user = useSelector(userSelector);
+  const dispatch = useDispatch();
 
   const logout = () => {
-    if (isAuth) {
-      setIsAuth(null);
+    if (user) {
+      dispatch(removeUser());
       window.localStorage.removeItem('user');
       navigate('/login', { replace: true });
     }
   };
 
-  const handleNavOpen = () => {
-    setActive(true);
-  };
-
-  const handleNavClose = () => {
-    setActive(false);
-  };
+  useEffect(() => {
+    if (mobileMenuIsOpen) {
+      document.body.classList.add('scroll-lock');
+    } else {
+      document.body.classList.remove('scroll-lock');
+    }
+  }, [mobileMenuIsOpen]);
 
   return (
     <div className="navbar">
       <div className="navbar__container">
         <button
-          className={classNames('burger', { active: active })}
-          onClick={active ? handleNavClose : handleNavOpen}
+          className={classNames('burger', { active: mobileMenuIsOpen })}
+          onClick={
+            mobileMenuIsOpen
+              ? () => setMobileMenuIsOpen(false)
+              : () => setMobileMenuIsOpen(true)
+          }
         >
           <span></span>
           <span></span>
           <span></span>
         </button>
         <nav className="navbar__navigation">
-          <ul className={classNames('navbar__list', { active: active })}>
+          <ul
+            className={classNames('navbar__list', { active: mobileMenuIsOpen })}
+          >
             <li className="navbar__item">
               <NavLink
                 to="/chat"
                 className="navbar__link"
-                onClick={handleNavClose}
+                onClick={() => setMobileMenuIsOpen(false)}
               >
                 Chat
               </NavLink>
             </li>
             <li className="navbar__item">
-              <NavLink to="/" className="navbar__link" onClick={handleNavClose}>
+              <NavLink
+                to="/"
+                className="navbar__link"
+                onClick={() => setMobileMenuIsOpen(false)}
+              >
                 About
               </NavLink>
             </li>
@@ -59,7 +73,7 @@ const Navbar = ({ handleOpenModal }) => {
               <NavLink
                 to="/partners"
                 className="navbar__link"
-                onClick={handleNavClose}
+                onClick={() => setMobileMenuIsOpen(false)}
               >
                 Partners
               </NavLink>
@@ -68,7 +82,7 @@ const Navbar = ({ handleOpenModal }) => {
               <NavLink
                 to="/privacy"
                 className="navbar__link"
-                onClick={handleNavClose}
+                onClick={() => setMobileMenuIsOpen(false)}
               >
                 Privacy policy
               </NavLink>
@@ -76,7 +90,7 @@ const Navbar = ({ handleOpenModal }) => {
           </ul>
         </nav>
         <div className="navbar__login">
-          {isAuth ? (
+          {user ? (
             <div className="btns">
               <Button size="small" color="dark" onClick={handleOpenModal}>
                 Profile

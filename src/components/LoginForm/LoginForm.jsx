@@ -1,44 +1,45 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { Formik, Form, Field } from 'formik';
+import { useDispatch } from 'react-redux';
 
+import { setUser } from '../../store/userSlice';
+import { countries } from '../../utils/countries';
+import SelectOptionWithFlag from '../SelectOptionWithFlag/SelectOptionWithFlag';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { AuthContext } from '../../context/AuthContext';
 import Select from '../Select/Select';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
+
 import { userValidation } from './LoginFormSchema';
-import { countries } from '../../utils/countries';
-import SelectOptionWithFlag from '../SelectOptionWithFlag/SelectOptionWithFlag';
 import './LoginForm.scss';
 
 const LoginForm = () => {
-  const [userName, setUserName] = useState('');
   const { setValue } = useLocalStorage('user');
-  const { setIsAuth } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fromPage = location.state?.from?.pathname || '/';
 
-  const newUserConnect = (e) => {
-    e.preventDefault();
+  const newUserConnect = ({ userName, country }) => {
     const message = {
       id: uuidv4(),
-      userName
+      userName,
+      country
     };
+    dispatch(setUser(message));
+    setValue(message);
     setTimeout(() => {
-      setIsAuth(message);
       navigate(fromPage, { replace: true });
     }, 0);
-    setValue(message);
-    setUserName('');
   };
 
   return (
     <Formik
-      initialValues={{ userName: '', country: '' }}
+      initialValues={{ userName: '', country: null }}
       validationSchema={userValidation}
       onSubmit={newUserConnect}
     >
@@ -65,9 +66,11 @@ const LoginForm = () => {
         </Button>
       </Form>
     </Formik>
-
   );
 };
 
-export default LoginForm;
+LoginForm.propTypes = {
+  setUser: PropTypes.func
+};
 
+export default LoginForm;

@@ -1,17 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Outlet, Navigate } from 'react-router';
 
-import { AuthContext } from '../context/AuthContext';
-import Spinner from '../components/Spinner/Spinner';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const PrivateRoutes = () => {
-  const { isAuth, isLoading } = useContext(AuthContext);
+  const { value } = useLocalStorage('user');
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  return isAuth ? <Outlet /> : <Navigate to="/login" />;
+  return value ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoutes;

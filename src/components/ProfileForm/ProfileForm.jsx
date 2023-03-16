@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { updateUser } from '../../store/userSlice';
+import { userSelector } from '../../store/selectors';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { AuthContext } from '../../context/AuthContext';
 import { userValidation } from '../LoginForm/LoginFormSchema';
 import { countries } from '../../utils/countries';
 import SelectOptionWithFlag from '../SelectOptionWithFlag/SelectOptionWithFlag';
@@ -14,20 +16,21 @@ import Select from '../Select/Select';
 import './ProfileForm.scss';
 
 const ProfileForm = ({ handleCloseModal }) => {
-  const { value, setValue } = useLocalStorage('user');
-  const { setIsAuth } = useContext(AuthContext);
+  const { setValue } = useLocalStorage('user');
+  const user = useSelector(userSelector);
+  const dispatch = useDispatch();
 
   const handleSubmit = ({ userName, country }) => {
-    const formData = { ...value, userName, country };
+    const formData = { ...user, userName, country };
     setValue(formData);
-    setIsAuth(formData);
+    dispatch(updateUser(formData));
     handleCloseModal();
     toast.success('Data changed succsessfully!');
   };
 
   return (
     <Formik
-      initialValues={{ userName: value.userName, country: value.country }}
+      initialValues={{ userName: user.userName, country: user.country }}
       validationSchema={userValidation}
       onSubmit={handleSubmit}
     >
@@ -41,7 +44,7 @@ const ProfileForm = ({ handleCloseModal }) => {
         />
         <Field
           component={Select}
-          defaultInputValue={value.country.name}
+          defaultInputValue={user.country.name}
           name="country"
           label="Country"
           options={countries}
